@@ -33,7 +33,12 @@ MYSQL_WORKBENCH_INSTALL=false
 MYSQL_WORKBENCH_VERSION=6.3.5
 VAGRANT_INSTALL=false
 VAGRANT_VERSION=1.7.4
-SPOFITY_INSTALL=true
+SPOFITY_INSTALL=false
+
+#APLICATIVOS EXTRAS
+STREMIO_INSTALL=true #app to stream of video like NETFLIX 
+STREMIO_VERSION=3.4.5  #see more http://dl.strem.io/Stremio3.4.5.linux.tar.gz
+
 
 DEL_FILES_AFTER_INSTALL=false	#verifica se é para deletar arquivos baixados após instalação default false
 
@@ -596,6 +601,46 @@ if [ $EVOLUS_PENCIL_INSTALL == true ]; then
 		echo "$MSG_SUCCESS Evoluspencil"
 	else
 		echo "$MSG_ERROR Evoluspencil"
+	fi
+fi
+
+#instalacao stremio
+if [ $STREMIO_INSTALL == true ]; then
+	echo "$MSG_DOWNLOADING Stremio"
+	sleep 2
+#	wget --output-document=stremio-$STREMIO_VERSION.tar.gz http://dl.strem.io/Stremio$STREMIO_VERSION.linux.tar.gz
+        wget --output-document=stremio.png http://www.strem.io/3.0/stremio-white-small.png
+	
+	echo "$MSG_UNISTALL Stremio"
+	rm -rf /usr/local/programas/stremio
+	rm -rf /usr/bin/stremio
+	rm -ff /usr/bin/Stremio-runtime
+	sleep 2
+
+	
+	echo "$MSG_INSTALLING Stremio"
+	mkdir $PATH_TO_INSTALL/stremio
+        tar xvzf stremio-$STREMIO_VERSION.tar.gz -C  "$PATH_TO_INSTALL/stremio/" > /dev/null 2>&1
+	chmod 777 -R "$PATH_TO_INSTALL/stremio/"
+	mv stremio.png $PATH_TO_INSTALL/stremio/
+	chmod +x $PATH_TO_INSTALL/stremio/Stremio.sh
+	#cria links
+	ln -s $PATH_TO_INSTALL/stremio/Stremio.sh /usr/bin/stremio
+	ln -s $PATH_TO_INSTALL/stremio/Stremio-runtime /usr/bin/Stremio-runtime
+	
+	INSTALL_SUCCESS=$?
+
+	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+		echo "$MSG_DELETE Stremio"
+		rm -rf stremio*
+		sleep 1
+	fi
+
+	#verifica se foi instalado com sucesso
+	if [ $INSTALL_SUCCESS -eq 0 ]; then
+		echo "$MSG_SUCCESS Stremio"
+	else
+		echo "$MSG_ERROR Stremio"
 	fi
 fi
 
