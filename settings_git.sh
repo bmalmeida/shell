@@ -41,15 +41,8 @@ cat > $HOME_DIR/.gitconfig <<EOF
 	email = $GIT_EMAIL
 [alias]
         hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-#        add-commit = !git add  && git commit
-#        acp = ! git commit -o -m \"commit\" && git push
-#        add-com-push = ! git add  && git commit -a -m \"commit\" && git push
-#        teste = !git add -p -y && git commit -a -m
-        gacp = ! echo \"enter commit message : \" \"echo enter name file :\" && read MSG && read TESTE && git add \"$TESTE\" && git commit -m \"$MSG\"
-#	add-commit-push = ! echo enter commit message: && read MSG && echo enter filename: && read FILE_NAME && git add \"$FILE_NAME\" && git commit -am \"$MSG\"
-#	add-commit-push = ! echo enter commit message: && read MSG && echo enter filename: && read FILE_NAME && git add \"$FILE_NAME\" && git commit -am \"teste\"
-#	add-commit-push = ! echo enter filename: && read FILE && echo enter commit message: && read MSG && echo arquivo: $FILE MSG: $MSG 
-#	add-commit-push = ! echo \"enter filename:\" && read FILE && git add "$FILE"
+        add-commit = ! echo enter filename \"'.'\" to all: && read FILE && echo enter commmit message: &&  read MSG && git add "\$FILE"  && git commit -am \"\$MSG\"
+	add-commit-push = ! echo enter filename \"'.'\" to all: && read FILE && echo enter commmit message: &&  read MSG && git add "\$FILE"  && git commit -am \"\$MSG\" && git push
 	st = status
 	#rollback last commit
 	rollback = reset --soft HEAD~1
