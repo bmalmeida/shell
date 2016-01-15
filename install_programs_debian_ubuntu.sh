@@ -19,35 +19,35 @@ ARCH=`uname -m` #arquitetura do sistema 		#x86_64
 PATH_TO_INSTALL='/usr/local/programas'
 ########## variaveis de sistema ######################################
 
-LO_VERSION='5.0.2'	 #libreOffice version
-LO_INSTALL=false  	#se é p/ instalar libreOffice
-CHROME_INSTALL=false
-FIREFOX_INSTALL=false
+LO_VERSION='5.0.4'	 #libreOffice version
+LO_INSTALL=true  	#se é p/ instalar libreOffice
+CHROME_INSTALL=true
+FIREFOX_INSTALL=true
 FIREFOX_VERSION='41.0.2'
-VIRTUAL_BOX_INSTALL=false
-DROP_BOX_INSTALL=false
+VIRTUAL_BOX_INSTALL=true
+DROP_BOX_INSTALL=true
 DROP_BOX_DATE='2015.10.28' #data ou versao "2.10.0" p/ montar o link p/ download entrar em: https://linux.dropbox.com/packages/$DISTRO_NAME e ver qual a última data.. [tentar automatizar]
-MEGA_INSTALL=false
-MEGA_VERSION=2.3.1
-MYSQL_WORKBENCH_INSTALL=false
+MEGA_INSTALL=true
+#MEGA_VERSION=2.3.1 # foi removido do link a versao.. somente https://mega.nz/linux/MEGAsync/Debian_8.0/amd64/megasync-Debian_8.0_amd64.deb
+MYSQL_WORKBENCH_INSTALL=true
 MYSQL_WORKBENCH_VERSION=6.3.5
-VAGRANT_INSTALL=false
+VAGRANT_INSTALL=true
 VAGRANT_VERSION=1.7.4
-SPOFITY_INSTALL=false
+SPOFITY_INSTALL=true
 
 #APLICATIVOS EXTRAS
 STREMIO_INSTALL=true #app to stream of video like NETFLIX 
 STREMIO_VERSION=3.4.5  #see more http://dl.strem.io/Stremio3.4.5.linux.tar.gz
 
 
-DEL_FILES_AFTER_INSTALL=false	#verifica se é para deletar arquivos baixados após instalação default false
+DEL_FILES_AFTER_INSTALL=true	#verifica se é para deletar arquivos baixados após instalação default false
 
 #IDE'S
 NETBEANS_INSTALL=false
 NETBEANS_VERSION=8.0.2 #see more http://www.netbeans.info/downloads/dev.php
-PHP_STORM_INSTALL=false
-PHP_STORM_VERSION=10.0 #see more https://www.jetbrains.com/phpstorm/download/
-EVOLUS_PENCIL_INSTALL=false
+PHP_STORM_INSTALL=true
+PHP_STORM_VERSION=9.0.2 #see more https://www.jetbrains.com/phpstorm/download/
+EVOLUS_PENCIL_INSTALL=true
 EVOLUS_PENCIL_VERSION=2.0.2
 
 #################### MSG'S SUCCESS.. ERROR.. #########################
@@ -70,7 +70,7 @@ MSG_ERROR=':: Erro na instalação :: '
 #apt-get update
 
 #tem em repositório
-#apt-get install curl vlc arj p7zip p7zip-full p7zip-rar rar unrar alacart htop meld
+apt-get install curl vlc arj p7zip p7zip-full p7zip-rar rar unrar alacart htop meld
 
 clear
 
@@ -308,7 +308,7 @@ if [ $MEGA_INSTALL == true ]; then
 
 		echo "$MSG_DOWNLOADING Mega"
 		sleep 2
-		wget --output-document=mega-$MEGA_VERSION'_'$ARCH2.deb  https://mega.nz/linux/MEGAsync/$DISTRO_ID2'_'$DISTRO_RELEASE2/$ARCH2/megasync'_'$MEGA_VERSION'_'$ARCH2.deb
+		wget --output-document=mega-'_'$ARCH2.deb  https://mega.nz/linux/MEGAsync/$DISTRO_ID2'_'$DISTRO_RELEASE2/$ARCH2/megasync'-'$DISTRO_ID2'_'$DISTRO_RELEASE2'_'$ARCH2.deb
 
 	
 		echo "$MSG_UNISTALL Mega"
@@ -318,7 +318,7 @@ if [ $MEGA_INSTALL == true ]; then
 	
 		echo "$MSG_INSTALLING Mega"
 
-		gdebi mega-$MEGA_VERSION'_'$ARCH2.deb --n  > /dev/null 2>&1 #auto accept
+		gdebi mega-'_'$ARCH2.deb --n  > /dev/null 2>&1 #auto accept
 		INSTALL_SUCCESS=$?
 
 		if [ $DEL_FILES_AFTER_INSTALL == true ]; then
@@ -465,7 +465,7 @@ if [ $SPOFITY_INSTALL == true ]; then
 	sleep 2
 
 	wget --output-document=libcrypt11_1.5.0.deb http://ftp.us.debian.org/debian/pool/main/libg/libgcrypt11/libgcrypt11_1.5.0-5+deb7u3_$ARCH2.deb
-	dpkg -i libcrypt11_1.5.0.deb -y 
+	dpkg -i libcrypt11_1.5.0.deb #-y é preciso?????
 
 	#add key	
 	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
@@ -608,7 +608,7 @@ fi
 if [ $STREMIO_INSTALL == true ]; then
 	echo "$MSG_DOWNLOADING Stremio"
 	sleep 2
-#	wget --output-document=stremio-$STREMIO_VERSION.tar.gz http://dl.strem.io/Stremio$STREMIO_VERSION.linux.tar.gz
+	wget --output-document=stremio-$STREMIO_VERSION.tar.gz http://dl.strem.io/Stremio$STREMIO_VERSION.linux.tar.gz
         wget --output-document=stremio.png http://www.strem.io/3.0/stremio-white-small.png
 	
 	echo "$MSG_UNISTALL Stremio"

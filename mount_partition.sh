@@ -5,9 +5,9 @@
 ################## VARIAVEIS #########################
 
 UUID_DADOS_NOTE=278d477a-4479-4960-a141-1662e3c27142 # /dev/sda1 ext4 dados notebook
-UUID_DADOS_CPU=1680085A6979127F # /dev/sda4 ntfs dados pc-desktop
+UUID_DADOS_CPU=f3d75426-464e-d101-c0c5-5026464ed101 # /dev/sda3 ext4 dados pc-desktop
 FS_NOTE='ext4'
-FS_CPU='ntfs-3g'
+FS_CPU='ext4'
 PATH_TO_MOUNT='/media/DADOS/'
 OPTION_TO_MOUNT=1 # 1 monta pc-desktop caso outro valor monta notebook
 FILE='/etc/fstab'
