@@ -77,7 +77,3 @@ else
 	#update .gitconfig
 	update_gitconfig
 fi
-
-
-#file exists
-#if [ -f $HOME_DIR/.gitconfig ]; then
