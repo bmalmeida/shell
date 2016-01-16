@@ -70,7 +70,7 @@ MSG_ERROR=':: Erro na instalação :: '
 #apt-get update
 
 #tem em repositório
-apt-get install curl vlc arj p7zip p7zip-full alacart htop meld -y
+apt-get install curl vlc arj p7zip p7zip-full alacart htop meld gPicView -y
 
 clear
 
