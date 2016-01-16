@@ -1,4 +1,4 @@
-	#!/bin/bash
+#!/bin/bash
 
 ######################## VARIAVEIS ####################################
 #informacoes sistema
@@ -70,7 +70,7 @@ MSG_ERROR=':: Erro na instalação :: '
 #apt-get update
 
 #tem em repositório
-apt-get install curl vlc arj p7zip p7zip-full p7zip-rar rar unrar alacart htop meld
+apt-get install curl vlc arj p7zip p7zip-full alacart htop meld -y
 
 clear
 
