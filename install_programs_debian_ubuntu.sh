@@ -70,7 +70,13 @@ MSG_ERROR=':: Erro na instalação :: '
 #apt-get update
 
 #tem em repositório
-apt-get install curl vlc arj p7zip p7zip-full alacart htop meld gPicView -y
+
+apt-get install curl vlc arj p7zip p7zip-full alacart htop meld gPicView vim vim-gnome -y
+
+#install syntax colorized to vim
+git clone https://github.com/fredericomartini/vimrc.git ~/.vim_runtime
+sh ~/.vim_runtime/install_awesome_vimrc.sh
+
 
 clear
 
