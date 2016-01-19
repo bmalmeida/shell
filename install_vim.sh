@@ -7,7 +7,7 @@ HOME_DIR="/home/$USER"
 
 
 #install vim and vim-gnome
-#apt-get install vim vim-gnome -y
+apt-get install vim vim-gnome -y
 
 #install syntax colorized to vim
 
@@ -27,7 +27,7 @@ function configure_vim(){
     #modify my_configs.vim  
 
     cat > $HOME_DIR/.vim_runtime/my_configs.vim <<EOF
-    colorscheme molokai
+    colorscheme peaksea
     backgroud = light
    
 EOF

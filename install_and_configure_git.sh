@@ -50,7 +50,7 @@ function update_gitconfig(){
 	#difftool
 	[diff]
 	    tool = meld
-	EOF
+EOF
 }
 
 #not installed
