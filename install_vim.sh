@@ -7,7 +7,7 @@ HOME_DIR="/home/$USER"
 
 
 #install vim and vim-gnome
-apt-get install vim vim-gnome -y
+#apt-get install vim vim-gnome -y
 
 #install syntax colorized to vim
 
@@ -35,4 +35,28 @@ EOF
     cp -R $HOME_DIR/.vim_runtime/my_configs.vim /root/.vim_runtime/
 }
 
-configure_vim
+function install_YouCompleteMe(){
+#install dependency
+apt-get install build-essential cmake python-dev
+
+#YouCompleteMe
+#git clone https://github.com/Valloric/YouCompleteMe.git $HOME_DIR/.vim_runtime/sources_non_forked/YouCompleteMe
+
+cd $HOME_DIR/.vim_runtime/sources_non_forked/YouCompleteMe/
+
+#submodules
+git submodule update --init --recursive
+
+#compilling YCM with semantic support for C-family languages
+./install.py --clang-completer
+
+#compilling YCM without semantic support for C-family languages
+#./install.py
+
+}
+
+
+
+#configure_vim
+
+install_YouCompleteMe
