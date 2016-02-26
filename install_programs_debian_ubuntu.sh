@@ -71,7 +71,9 @@ MSG_ERROR=':: Erro na instalação :: '
 
 #tem em repositório
 
-apt-get install curl vlc arj p7zip p7zip-full alacart htop meld gPicView vim vim-gnome -y
+apt-get install curl vlc arj p7zip p7zip-full alacart htop meld gPicView
+#search in files the occurrence of text; use -> ag text_to_search
+install silversearcher-ag -y
 
 #install syntax colorized to vim
 git clone https://github.com/fredericomartini/vimrc.git ~/.vim_runtime
