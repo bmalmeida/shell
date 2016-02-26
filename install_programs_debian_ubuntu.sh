@@ -20,34 +20,34 @@ PATH_TO_INSTALL='/usr/local/programas'
 ########## variaveis de sistema ######################################
 
 LO_VERSION='5.0.4'	 #libreOffice version
-LO_INSTALL=true  	#se é p/ instalar libreOffice
-CHROME_INSTALL=true
-FIREFOX_INSTALL=true
+LO_INSTALL=false  	#se é p/ instalar libreOffice
+CHROME_INSTALL=false
+FIREFOX_INSTALL=false
 FIREFOX_VERSION='41.0.2'
-VIRTUAL_BOX_INSTALL=true
-DROP_BOX_INSTALL=true
+VIRTUAL_BOX_INSTALL=false
+DROP_BOX_INSTALL=false
 DROP_BOX_DATE='2015.10.28' #data ou versao "2.10.0" p/ montar o link p/ download entrar em: https://linux.dropbox.com/packages/$DISTRO_NAME e ver qual a última data.. [tentar automatizar]
-MEGA_INSTALL=true
+MEGA_INSTALL=false
 #MEGA_VERSION=2.3.1 # foi removido do link a versao.. somente https://mega.nz/linux/MEGAsync/Debian_8.0/amd64/megasync-Debian_8.0_amd64.deb
-MYSQL_WORKBENCH_INSTALL=true
+MYSQL_WORKBENCH_INSTALL=false
 MYSQL_WORKBENCH_VERSION=6.3.5
-VAGRANT_INSTALL=true
+VAGRANT_INSTALL=false
 VAGRANT_VERSION=1.7.4
-SPOFITY_INSTALL=true
+SPOFITY_INSTALL=false
 
 #APLICATIVOS EXTRAS
-STREMIO_INSTALL=true #app to stream of video like NETFLIX 
+STREMIO_INSTALL=false #app to stream of video like NETFLIX 
 STREMIO_VERSION=3.4.5  #see more http://dl.strem.io/Stremio3.4.5.linux.tar.gz
 
 
-DEL_FILES_AFTER_INSTALL=true	#verifica se é para deletar arquivos baixados após instalação default false
+DEL_FILES_AFTER_INSTALL=false	#verifica se é para deletar arquivos baixados após instalação default false
 
 #IDE'S
 NETBEANS_INSTALL=false
 NETBEANS_VERSION=8.0.2 #see more http://www.netbeans.info/downloads/dev.php
-PHP_STORM_INSTALL=true
+PHP_STORM_INSTALL=false
 PHP_STORM_VERSION=9.0.2 #see more https://www.jetbrains.com/phpstorm/download/
-EVOLUS_PENCIL_INSTALL=true
+EVOLUS_PENCIL_INSTALL=false
 EVOLUS_PENCIL_VERSION=2.0.2
 
 #################### MSG'S SUCCESS.. ERROR.. #########################
@@ -72,6 +72,8 @@ MSG_ERROR=':: Erro na instalação :: '
 #tem em repositório
 
 apt-get install curl vlc arj p7zip p7zip-full alacart htop meld gPicView
+#shell with lot of features
+zsh 
 #search in files the occurrence of text; use -> ag text_to_search
 install silversearcher-ag -y
 
@@ -83,7 +85,7 @@ sh ~/.vim_runtime/install_awesome_vimrc.sh
 clear
 
 #instalacao libreOffice
-if [ $LO_INSTALL == true ]; then
+if [ $LO_INSTALL == false ]; then
 	echo "$MSG_DOWNLOADING LibreOffice"
 	sleep 2
 	if [ $ARCH != 'x86_64' ]; then #sistema 32bit
@@ -109,7 +111,7 @@ if [ $LO_INSTALL == true ]; then
 	dpkg -i /tmp/Libre*/DEBS/*.deb > /dev/null 2>&1
 	LO_INSTALL_SUCCESS=$?
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE LibreOffice" #removendo arquivos pós-instalação
 		rm -rf /tmp/Libre* > /dev/null 2>&1
 		rm -rf libreOffice-$LO_VERSION.tar.gz > /dev/null 2>&1
@@ -122,7 +124,7 @@ if [ $LO_INSTALL == true ]; then
 	dpkg -i /tmp/Libre*/DEBS/*.deb > /dev/null 2>&1
 	LO_INSTALL_LANG_PACK_SUCCESS=$?
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE LibreOffice Language-pack" #removendo arquivos pós-instalação
 		rm -rf libreOffice-$LO_VERSION-Language-pt-br.tar.gz > /dev/null 2>&1
 		sleep 1
@@ -143,7 +145,7 @@ if [ $LO_INSTALL == true ]; then
 fi
 
 #instalacao google chrome
-if [ $CHROME_INSTALL == true ]; then
+if [ $CHROME_INSTALL == false ]; then
 	#download
 	echo "$MSG_DOWNLOADING Google Chrome"
 	sleep 2
@@ -166,7 +168,7 @@ if [ $CHROME_INSTALL == true ]; then
 	gdebi google-chrome-stable_current_$ARCH2.deb --n > /dev/null 2>&1 #auto accept 
 	INSTALL_SUCCESS=$?
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE Google Chrome" #removendo arquivos pós-instalação
 		rm -rf google-chrome* > /dev/null 2>&1
 		sleep 1
@@ -181,7 +183,7 @@ if [ $CHROME_INSTALL == true ]; then
 fi
 
 #instalacao firefox
-if [ $FIREFOX_INSTALL == true ]; then
+if [ $FIREFOX_INSTALL == false ]; then
 	#download
 	echo "$MSG_DOWNLOADING Firefox"
 	sleep 2
@@ -210,7 +212,7 @@ if [ $FIREFOX_INSTALL == true ]; then
 	ln -s /opt/firefox/firefox /bin/firefox #cria link simbolico p/ binarios
 	INSTALL_SUCCESS=$?	
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE Firefox" #removendo arquivos pós-instalação
 		rm -rf firefox*
 	fi
@@ -224,7 +226,7 @@ if [ $FIREFOX_INSTALL == true ]; then
 fi
 
 #instalacao virtualbox
-if [ $VIRTUAL_BOX_INSTALL == true ]; then
+if [ $VIRTUAL_BOX_INSTALL == false ]; then
 	#comentar linha em /etc/apt/sources.list referente a atualização por cd
 	sed -i "s,deb cdrom:,#deb cdrom:,g"  /etc/apt/sources.list  > /dev/null 2>&1
 
@@ -259,7 +261,7 @@ if [ $VIRTUAL_BOX_INSTALL == true ]; then
 fi
 
 #instalacao drop-box
-if [ $DROP_BOX_INSTALL == true ]; then
+if [ $DROP_BOX_INSTALL == false ]; then
 	if [ $ARCH != 'x86_64' ]; then #sistema 32bit
 		ARCH2=i386
 	else
@@ -278,7 +280,7 @@ if [ $DROP_BOX_INSTALL == true ]; then
 	gdebi dropbox-$DROP_BOX_DATE'_'$ARCH2.deb --n  > /dev/null 2>&1 #auto accept
 	INSTALL_SUCCESS=$?
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE Dropbox"
 		rm -rf dropbox-*
 		sleep 1
@@ -294,7 +296,7 @@ fi
 
 
 #instalacao mega-cz
-if [ $MEGA_INSTALL == true ]; then
+if [ $MEGA_INSTALL == false ]; then
 	if [ $ARCH != 'x86_64' ]; then #sistema 32bit
 		ARCH2=i386
 	else
@@ -329,7 +331,7 @@ if [ $MEGA_INSTALL == true ]; then
 		gdebi mega-'_'$ARCH2.deb --n  > /dev/null 2>&1 #auto accept
 		INSTALL_SUCCESS=$?
 
-		if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+		if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 			echo "$MSG_DELETE Mega"
 			rm -rf mega-*
 			sleep 1
@@ -348,7 +350,7 @@ fi
 
 
 #instalacao mysqlworkbench
-if [ $MYSQL_WORKBENCH_INSTALL == true ]; then
+if [ $MYSQL_WORKBENCH_INSTALL == false ]; then
 	if [ $ARCH != 'x86_64' ]; then #sistema 32bit
 		ARCH2=i386
 	else
@@ -390,7 +392,7 @@ if [ $MYSQL_WORKBENCH_INSTALL == true ]; then
 		gdebi mysql-workbench-$MYSQL_WORKBENCH_VERSION-$ARCH2.deb --n  > /dev/null 2>&1 #auto accept
 		INSTALL_MYSQL_SUCCESS=$?
 
-		if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+		if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 			echo "$MSG_DELETE MySQL Workbench"
 			rm -rf mysql-workbench*
 			rm -rf libjpeg8*
@@ -416,7 +418,7 @@ if [ $MYSQL_WORKBENCH_INSTALL == true ]; then
 fi
 
 #instalacao vagrant
-if [ $VAGRANT_INSTALL == true ]; then
+if [ $VAGRANT_INSTALL == false ]; then
 	if [ $ARCH != 'x86_64' ]; then #sistema 32bit
 		ARCH2=i686
 	else
@@ -441,7 +443,7 @@ if [ $VAGRANT_INSTALL == true ]; then
 	INSTALL_SUCCESS2=$?
 
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE Vagrant"
 		rm -rf vagrant*
 		sleep 1
@@ -463,7 +465,7 @@ if [ $VAGRANT_INSTALL == true ]; then
 fi
 
 #instalacao spotify
-if [ $SPOFITY_INSTALL == true ]; then
+if [ $SPOFITY_INSTALL == false ]; then
 	if [ $ARCH != 'x86_64' ]; then #sistema 32bit
 		ARCH2=i386
 	else
@@ -499,7 +501,7 @@ fi
 
 
 #instalacao netbeans
-if [ $NETBEANS_INSTALL == true ]; then
+if [ $NETBEANS_INSTALL == false ]; then
 	if [ $ARCH != 'x86_64' ]; then #sistema 32bit
 		ARCH2=i686
 	else
@@ -521,7 +523,7 @@ if [ $NETBEANS_INSTALL == true ]; then
 	./netbeans-$NETBEANS_VERSION.sh #-y > /dev/null 2>&1
 	INSTALL_SUCCESS=$?
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE Netbeans"
 		rm -rf netbeans*
 		sleep 1
@@ -536,7 +538,7 @@ if [ $NETBEANS_INSTALL == true ]; then
 fi
 
 #instalacao phpStorm
-if [ $PHP_STORM_INSTALL == true ]; then
+if [ $PHP_STORM_INSTALL == false ]; then
 	echo "$MSG_DOWNLOADING phpStorm"
 	sleep 2
 	wget --output-document=phpStorm-$PHP_STORM_VERSION.tar.gz http://download.jetbrains.com/webide/PhpStorm-$PHP_STORM_VERSION.tar.gz
@@ -568,7 +570,7 @@ if [ $PHP_STORM_INSTALL == true ]; then
 	ln -s $PATH_TO_INSTALL/phpStorm/*/bin/phpstorm.sh /usr/bin/phpstorm
 	INSTALL_SUCCESS=$?
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE phpStorm"
 		rm -rf phpStorm*
 		sleep 1
@@ -583,7 +585,7 @@ if [ $PHP_STORM_INSTALL == true ]; then
 fi
 
 #instalacao evoluspencil
-if [ $EVOLUS_PENCIL_INSTALL == true ]; then
+if [ $EVOLUS_PENCIL_INSTALL == false ]; then
 	echo "$MSG_DOWNLOADING Evoluspencil"
 	sleep 2
 #	wget --output-document=evoluspencil-$EVOLUS_PENCIL_VERSION.deb https://evoluspencil.googlecode.com/files/evoluspencil'_'$EVOLUS_PENCIL_VERSION'_'all.deb
@@ -598,7 +600,7 @@ if [ $EVOLUS_PENCIL_INSTALL == true ]; then
 	gdebi evoluspencil-$EVOLUS_PENCIL_VERSION.deb --n # > /dev/null 2>&1 #auto accept
 	INSTALL_SUCCESS=$?
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE Evoluspencil"
 		rm -rf evoluspencil*
 		sleep 1
@@ -613,7 +615,7 @@ if [ $EVOLUS_PENCIL_INSTALL == true ]; then
 fi
 
 #instalacao stremio
-if [ $STREMIO_INSTALL == true ]; then
+if [ $STREMIO_INSTALL == false ]; then
 	echo "$MSG_DOWNLOADING Stremio"
 	sleep 2
 	wget --output-document=stremio-$STREMIO_VERSION.tar.gz http://dl.strem.io/Stremio$STREMIO_VERSION.linux.tar.gz
@@ -638,7 +640,7 @@ if [ $STREMIO_INSTALL == true ]; then
 	
 	INSTALL_SUCCESS=$?
 
-	if [ $DEL_FILES_AFTER_INSTALL == true ]; then
+	if [ $DEL_FILES_AFTER_INSTALL == false ]; then
 		echo "$MSG_DELETE Stremio"
 		rm -rf stremio*
 		sleep 1
