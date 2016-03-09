@@ -14,40 +14,43 @@ USER_EMAIL='fredmalmeida@gmail.com'
 PROJECT_DIR=/home/fred/Docker/
 APPLICATION_NAME=app
 
-#Must installed curl
+install (){
 
-#(verify_isntallation) adicionar
-#INSTALLED=`which curl`
+    #Must installed curl
 
-#not installed
-#if [ $INSTALLED -eq 0 ]; then 
-#    apt-get update && apt-get install curl
-#fi
+    #(verify_isntallation) adicionar
+    INSTALLED=`/bin/bash verify_installation.sh curl`
+
+    #not installed
+    if [ ! $INSTALLED -eq 0 ]; then 
+        sudo apt-get update && sudo apt-get install curl
+    fi
 
 
-#get latest Docker packege
+    #get latest Docker packege
 
-#curl -fsSL https://get.docker.com/ | sh
+    curl -fsSL https://get.docker.com/ | sh
 
-#Note: If your company is behind a filtering proxy, you may find that the apt-key command fails for the Docker repo during installation. To work around this, add the key directly using the following:
-#curl -fsSL https://get.docker.com/gpg | sudo apt-key add -
+    #Note: If your company is behind a filtering proxy, you may find that the apt-key command fails for the Docker repo during installation. To work around this, add the key directly using the following:
+    curl -fsSL https://get.docker.com/gpg | sudo apt-key add -
 
-#add a user to docker group
-#sudo usermod -aG docker docker
+    #add a user to docker group
+    sudo usermod -aG docker fred
 
-#start service docker
-#sudo service docker start
+    #start service docker
+    sudo service docker start
 
-#verify docker is installed correctly
-#docker run hello-world
+    #verify docker is installed correctly
+    docker run hello-world
+
+}
 
 create_nginx_docker_image () {
     #folder to nginx configuration
     mkdir images && cd images/ && mkdir nginx && cd nginx
 
     #create a DockerFile
-    cat > Dockerfile <<EOF
-    FROM phusion/baseimage
+    cat > Dockerfile <<EOF FROM phusion/baseimage
     MAINTAINER $USER_NAME <$USER_EMAIL>
 
     CMD ["/sbin/my_init"]
@@ -122,4 +125,6 @@ main () {
 
 }   
 
-main
+#main
+install
+

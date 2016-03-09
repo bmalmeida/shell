@@ -1,14 +1,10 @@
 #!/bin/bash
 
+#case program passed to function
+#found on system them return 0 else 1
 function verify_installation(){
-INSTALLED=`which $1`
-    if [ -n "$INSTALLED" ]; then
-        echo 0; #true
-    else
-        echo 1; #false
-    fi
-    return
+which $1 > /dev/null 2>&1
+    echo $?
 }
 
-
-verify_installation 'zss'
+verify_installation $1

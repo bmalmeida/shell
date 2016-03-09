@@ -1,24 +1,28 @@
 #!/bin/bash
+#
+#install and configure zsh with oh-my-zsh
+#
 
-#install and configure zsh with oh-my-sh
+function main(){
+    #check if zsh installed
+    INSTALLED=`/bin/bash verify_installation.sh zsh`
+    USER=`ls /home/`
+    
+    if [ ! $INSTALLED -eq 0 ]; then #not intalled
+        apt-get update && apt-get install zsh -y
+    fi
+    
+    my_zsh
+}
 
-#apt-get install zsh
+function my_zsh(){
+    #root
+    su - root sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
-#verify_installation(){
-#SUCCESS= `which $1`
-#    if ( $SUCCESS -eq 0 ); then
-#        echo 'instalado'
-#    else
-#        echo 'nao instalado'
-#    fi
-#}
+    #normal user
+    su - $USER sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+}
 
-#check if program installed
-$INSTALLED=`(/bin/bash verify_installation.sh 'zsh')`
+main
 
-if [ ! "$INSTALLED" -eq 0 ]; then #not intalled
-    echo 'not installed'
-else
-    echo 'instalado'
-fi
 
