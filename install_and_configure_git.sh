@@ -47,6 +47,12 @@ function update_gitconfig(){
 		rollback = reset --soft HEAD~1
 		#diff 
 		dt = difftool -y
+        #delete remote branch e push
+        del-remote-branch = ! echo enter branch name && read BRANCH && git branch -D $BRANCH && git branch --delete --remotes origin/$BRANCH  && git push origin --delete $BRANCH 
+
+        #push a branch to remote
+        push-remote-branch = ! echo enter branch name && read BRANCH && git push --set-upstream origin $BRANCH
+
 	#difftool
 	[diff]
 	    tool = meld
