@@ -24,7 +24,7 @@ function install(){
 	clear
 	echo 'git not installed, will be installed'
 	sleep 2
-	apt-get update && apt-get install git gitk meld -y #> /dev/null 2>&1
+	apt-get update && apt-get install git gitk git-flow meld -y #> /dev/null 2>&1
 	return $?
 }
 
