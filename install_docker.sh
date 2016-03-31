@@ -44,10 +44,28 @@ sudo usermod -aG docker $USER_TO_DOCKER
 sudo service docker restart
 }
 
+function add_insecure_registry() {
+#adicionar uma linha no arquivo /etc/default/docker contendo --insecure-registry mydomain.com onde
+#mydomain.com é o nome do servidor onde se encontra o private registry c/ as imagens
+sudo sed -i "1s,^,######### adicionado pelo script de instalação ##########\nDOCKER_OPTS=\"--insecure-registry localhost:5000\"\n\n,g" /etc/default/docker
+}
+
+function unistall_complete() {
+sudo apt-get purge docker-engine
+sudo rm -rf /var/lib/docker
+exit
+}
+
 function main() {
+if [[ ( -n "$USER_PARAM"  && "$USER_PARAM"  == 'unistall' || "$USER_PARAM" == 'remove' ) ]]; then
+    echo 'Docker será removido...'
+    unistall_complete
+fi
+
 install_dependencies
 install_docker
 add_user_docker
+add_insecure_registry
 }   
 
 main
