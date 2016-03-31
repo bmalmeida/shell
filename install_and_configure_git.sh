@@ -14,7 +14,7 @@ function verify_installation(){
 	if [ -n "$INSTALLED" ]; then
 		echo 0; #true
 	else
-		echo 1; #false
+	    install	
 	fi
 	return
 }
@@ -59,15 +59,10 @@ function update_gitconfig(){
 EOF
 }
 
-#not installed
-if [ ! `verify_installation` -eq 0 ]; then
-	if [ `install` -eq 0 ]; then #return true if install
-		#update .giconfig		
-		update_gitconfig
-	else
-		echo 'Erro: Not installed'
-	fi
-else
-	#update .gitconfig
-	update_gitconfig
-fi
+function main() {
+verify_installation
+update_gitconfig
+
+}
+
+main
