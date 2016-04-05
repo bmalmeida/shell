@@ -52,6 +52,8 @@ function update_gitconfig(){
 
         #push a branch to remote
         push-remote-branch = ! echo enter branch name && read BRANCH && git push --set-upstream origin $BRANCH
+        #reset branch p/ o default, removendo tudo ..
+        reset-to-default-and-remove-files =! git reset --hard origin/HEAD && git clean -d -f
 
 	#difftool
 	[diff]
