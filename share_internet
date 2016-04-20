@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+# coding: utf-8
+# Script p/ configurar compartilhamento de internet
+# Importar modulo do sistema operacional
+# colocar na inicializacao do sistema /etc/rc.local chamada de script... 
+import os, re, sys
+#param passed 
+arg_passed = sys.argv[1:]
+
+if arg_passed[0] == 'note' or arg_passed[0] == 'notebook':
+    #configura guest
+    os.system("ifconfig eth0 10.0.0.2 netmask 255.0.0.0 up")
+    os.system("route add default gw 10.0.0.1 eth0")
+
+else:
+    #configura host
+    # o comando acima vc determina a faixa de ip para a placa rede eth0
+    os.system("ifconfig eth0 10.0.0.1 netmask 255.0.0.0 up")
+    #agora compartilhar conexão:
+    os.system("modprobe iptable_nat")
+
+    #onde wlan0 é a placa que compartilhará a internet
+    os.system("iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE")
+    #no comando acima, estamos compartilhando o sinal recebido pela placa de rede sem  fio wlan0
+    #ainda nao sei p/ que serve..
+    #os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
+
+    #reiniciar rede
+    os.system("service networking restart")
+    print("########## Configured share of internet by interface wlan0 ##########")
