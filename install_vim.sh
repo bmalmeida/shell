@@ -7,32 +7,32 @@ HOME_DIR="/home/$USER"
 
 
 function install_vim(){
-apt-get install vim vim-gnome -y
+apt-get install -y vim vim-gnome
 
 }
 
 #configure vim
 function configure_vim() {
 #clone to home_dir
-git clone https://github.com/fredericomartini/vimrc.git $HOME_DIR/.vim_runtime
+git clone https://github.com/amix/vimrc.git $HOME_DIR/.vim_runtime
 #copy to root dir
-cp -R $HOME_DIR/.vim_runtime /root/
+sudo cp -R $HOME_DIR/.vim_runtime /root/
 
 #script install home_dir
 sh $HOME_DIR/.vim_runtime/install_awesome_vimrc.sh
 
 #script install root_dir
-sh /root/.vim_runtime/install_awesome_vimrc.sh
+sudo sh /root/.vim_runtime/install_awesome_vimrc.sh
 
 #modify my_configs.vim  
 
-cat > $HOME_DIR/.vim_runtime/my_configs.vim <<EOF
-colorscheme peaksea
-backgroud = light
+#cat > $HOME_DIR/.vim_runtime/my_configs.vim <<EOF
+#colorscheme peaksea
+#backgroud = dark
 
-EOF
+#EOF
 #configure root settings
-cp -R $HOME_DIR/.vim_runtime/my_configs.vim /root/.vim_runtime/
+#cp -R $HOME_DIR/.vim_runtime/my_configs.vim /root/.vim_runtime/
 
 }
 
@@ -49,10 +49,10 @@ cd $HOME_DIR/.vim_runtime/sources_non_forked/YouCompleteMe/
 git submodule update --init --recursive
 
 #compilling YCM with semantic support for C-family languages
-./install.py --clang-completer
+#./install.py --clang-completer
 
 #compilling YCM without semantic support for C-family languages
-#./install.py
+./install.py
 
 }
 
