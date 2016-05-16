@@ -48,10 +48,10 @@ function update_gitconfig(){
 		#diff 
 		dt = difftool -y
         #delete remote branch e push
-        del-remote-branch = ! echo enter branch name && read BRANCH && git branch -D $BRANCH && git branch --delete --remotes origin/$BRANCH  && git push origin --delete $BRANCH 
+        del-remote-branch = ! echo enter branch name && read BRANCH && git branch -D \$BRANCH && git branch --delete --remotes origin/\$BRANCH  && git push origin --delete \$BRANCH 
 
         #push a branch to remote
-        push-remote-branch = ! echo enter branch name && read BRANCH && git push --set-upstream origin $BRANCH
+        push-remote-branch = ! echo enter branch name && read BRANCH && git push --set-upstream origin \$BRANCH
         #reset branch p/ o default, removendo tudo ..
         reset-to-default-and-remove-files =! git reset --hard origin/HEAD && git clean -d -f
 
