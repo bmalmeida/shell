@@ -37,6 +37,8 @@ VIM=false
 DOCKER=false
 ZSH=false
 JAVA=false
+CAIXA_MODULE=false
+SUBLIME_TEXT=true
 #################################################
 
 function verify_dir() {
@@ -297,6 +299,37 @@ function install_programs() {
         fi
     fi
 
+    #sublime-text
+    if [ $SUBLIME_TEXT == true ]; then
+        sudo ./install_sublime_text3.sh
+
+        if [ $? -eq 0 ]; then
+            PROGRAMS['sublime-text']=true
+        else
+            PROGRAMS['sublime-text']=false;
+        fi
+    fi
+
+    #caixa module
+    if [ $CAIXA_MODULE == true ]; then
+        sudo ./install_modulo_seg_caixa.sh
+        if [ $? -eq 0 ]; then
+            PROGRAMS['caixa-module']=true
+        else
+            PROGRAMS['caixa-module']=false;
+        fi
+    fi
+
+
+    #-text
+    if [ $SUBLIME_TEXT == true ]; then
+        sudo ./install_sublime_text3.sh
+        if [ $? -eq 0 ]; then
+            PROGRAMS['sublime-text']=true
+        else
+            PROGRAMS['sublime-text']=false;
+        fi
+    fi
 
 }
 
