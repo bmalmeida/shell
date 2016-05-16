@@ -9,9 +9,12 @@ UUID_DADOS_CPU=f3d75426-464e-d101-c0c5-5026464ed101 # /dev/sda3 ext4 dados pc-de
 FS_NOTE='ext4'
 FS_CPU='ext4'
 PATH_TO_MOUNT='/media/DADOS/'
-OPTION_TO_MOUNT=1 # 1 monta pc-desktop caso outro valor monta notebook
+OPTION_TO_MOUNT=desktop # desktop monta pc-desktop caso outro valor monta notebook
 FILE='/etc/fstab'
 
+if [ -e "$1" ]; then
+    OPTION_TO_MOUNT=$1
+fi
 ######################################################
 
 #verifica se diretorio/pasta nao existe
@@ -30,7 +33,7 @@ fi
 chmod 777 -R $PATH_TO_MOUNT
 
 #pc-desktop
-if [ $OPTION_TO_MOUNT == 1 ]; then
+if [ $OPTION_TO_MOUNT == desktop ]; then
 	#adiciona linha no arquivo /etc/fstab p/ montagem automatica no boot
 	echo "#dados"  >> $FILE
 	echo "UUID=$UUID_DADOS_CPU $PATH_TO_MOUNT  $FS_CPU    defaults        1 2" >> $FILE

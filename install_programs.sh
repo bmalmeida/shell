@@ -7,7 +7,7 @@ DISTRO_INFO=$(lsb_release -i) #Distributor ID: Ubuntu
 DISTRO_ID=${DISTRO_INFO#'Distributor ID:'*} #remove Distributor ID:
 DISTRO_ID=$(echo $DISTRO_ID | sed 's/^[ \t]*//') #remove leading spaces
 DISTRO_ID=${DISTRO_ID,,}                #to_lower
-
+USER=$(ls /home)
 INSTALL_DIR='/usr/local/programas'
 ARCH=$(uname -m)
 
@@ -38,7 +38,10 @@ DOCKER=false
 ZSH=false
 JAVA=false
 CAIXA_MODULE=false
-SUBLIME_TEXT=true
+SUBLIME_TEXT=false
+MOUNT_PARTITION=false
+DEVICE=desktop
+CREATE_LINKS=false
 #################################################
 
 function verify_dir() {
@@ -321,13 +324,40 @@ function install_programs() {
     fi
 
 
-    #-text
+    #sublime-text
     if [ $SUBLIME_TEXT == true ]; then
         sudo ./install_sublime_text3.sh
         if [ $? -eq 0 ]; then
             PROGRAMS['sublime-text']=true
         else
             PROGRAMS['sublime-text']=false;
+        fi
+    fi
+
+    #mount-partition
+    if [ $MOUNT_PARTITION == true ]; then
+        sudo ./mount_partition.sh desktop 
+        if [ $? -eq 0 ]; then
+            PROGRAMS['mount-partition']=true
+        else
+            PROGRAMS['mount-partition']=false;
+        fi
+    fi
+
+    #create links
+    if [ $CREATE_LINKS == true ]; then
+        if [ $DEVICE == desktop ]; then
+            ln -s /media/DADOS/Pictures /home/$USER/Pictures
+            ln -s /media/DADOS/Documentos home/$USER/Documents
+            ln -s /media/DADOS/Cloud /home/$USER/Cloud
+            ln -s /media/DADOS/Downloads /home/$USER/Downloads
+            ln -s /media/DADOS/Filmes /home/$USER/Videos
+            ln -s /media/DADOS/git /home/$USER/git
+        fi 
+        if [ $? -eq 0 ]; then
+            PROGRAMS['create-links']=true
+        else
+            PROGRAMS['create-links']=false;
         fi
     fi
 
