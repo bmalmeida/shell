@@ -31,6 +31,7 @@ PHP_STORM_VERSION=9.0.2 #see more https://www.jetbrains.com/phpstorm/download/
 EVOLUS_PENCIL_INSTALL=false
 EVOLUS_PENCIL_VERSION=2.0.2
 MYSQL_WORKBENCH=false
+DATA_STUDIO=true
 #others with script
 GIT=false
 VIM=false
@@ -358,6 +359,18 @@ function install_programs() {
             PROGRAMS['create-links']=true
         else
             PROGRAMS['create-links']=false;
+        fi
+    fi
+
+    #datastudio
+    if [ $DATA_STUDIO == true ]; then
+        if [ -f "/media/DADOS/Programas/datastudio6.5.tar.gz" ]; then #file exist
+            tar -xzvf /media/DADOS/Programas/datastudio6.5.tar.gz -C $INSTALL_DIR/ 
+        fi
+        if [ $? -eq 0 ]; then
+            PROGRAMS['data-studio']=true
+        else
+            PROGRAMS['data-studio']=false;
         fi
     fi
 
