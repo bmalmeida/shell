@@ -31,7 +31,7 @@ PHP_STORM_VERSION=9.0.2 #see more https://www.jetbrains.com/phpstorm/download/
 EVOLUS_PENCIL_INSTALL=false
 EVOLUS_PENCIL_VERSION=2.0.2
 MYSQL_WORKBENCH=false
-DATA_STUDIO=true
+DATA_STUDIO=false
 #others with script
 GIT=false
 VIM=false
@@ -43,6 +43,8 @@ SUBLIME_TEXT=false
 MOUNT_PARTITION=false
 DEVICE=desktop
 CREATE_LINKS=false
+THEME_FLATABULOUS=true
+ULTRA_FLAT_ICONS=false
 #################################################
 
 function verify_dir() {
@@ -374,6 +376,33 @@ function install_programs() {
         fi
     fi
 
+    #theme flatabulous
+    if [ $THEME_FLATABULOUS == true ];then
+        wget https://github.com/anmoljagetia/Flatabulous/archive/master.zip -O $INSTALL_DIR/flatabulous.zip
+        cd $INSTALL_DIR
+        if [ ! -d "/home/$USER/.themes" ]; then
+            mkdir /home/$USER/.themes
+        fi
+        unzip $INSTALL_DIR/flatabulous.zip -d /home/$USER/.themes/
+
+        if [ $? -eq 0 ]; then
+            PROGRAMS['flatabulous-theme']=true
+        else
+            PROGRAMS['flatabulous-theme']=false;
+        fi
+    fi
+
+    #ultra-flat icons 
+    if [ $ULTRA_FLAT_ICONS == true ];then
+        sudo add-apt-repository ppa:noobslab/icons -y
+        sudo apt-get update
+        sudo apt-get install -y ultra-flat-icons ultra-flat-icons-green ultra-flat-icons-orange
+        if [ $? -eq 0 ]; then
+            PROGRAMS['ultra-flat-icons']=true
+        else
+            PROGRAMS['ultra-flat-icons']=false;
+        fi
+    fi
 }
 
 function verify_installation() {
