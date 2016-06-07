@@ -1,0 +1,38 @@
+#!/bin/bash
+BRANCH=''
+
+function git_pull() {
+    echo "git pull"
+}
+
+function git_checkout() {
+    echo "git checkout $1"
+}
+
+function read_params() {
+    echo "Informe o branch que ira receber o merge de develop"
+    read BRANCH
+
+    if [[ ! ( -n "$BRANCH"  && "$CONFIRM"  != 'develop' ) ]]; then
+        echo 'Não informou o branch'
+        main
+    fi
+}
+function git_merge() {
+    echo "git merge develop"
+}
+
+function main() {
+    read_params
+    if [ -n "$BRANCH" ]; then 
+        git_checkout develop
+        git_pull
+        git_checkout $BRANCH
+        git_merge
+    else
+        echo 'Não foi informado branch'
+    fi
+
+}
+
+main
