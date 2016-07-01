@@ -2,7 +2,11 @@
 #script to install and configure vim with plugins
 #see more on https://github.com/fredericomartini/vimrc
 
-USER=`ls /home/`
+USER=$(who | cut -d" " -f1)
+PASSED_USER=$1
+if [ -n "$PASSED_USER" ];then #user passed
+	USER=$PASSED_USER
+fi
 HOME_DIR="/home/$USER"
 
 

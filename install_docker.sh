@@ -3,10 +3,9 @@
 #install Docker Engine
 
 ################ VARIAVEIS #################
-USER_TO_DOCKER='fred' #passar como parametro p/ script
+USER_TO_DOCKER=$(who | cut -d" " -f1)
 USER_PARAM=$1
 ############################################
-
 
 if [ -n "$USER_PARAM" ]; then #passado parametro usuario
     USER_TO_DOCKER=$USER_PARAM

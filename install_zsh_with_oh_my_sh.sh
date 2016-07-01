@@ -5,8 +5,8 @@
 
 function main(){
 #check if zsh installed
-INSTALLED=`which zsh`
-USER=`ls /home/`
+INSTALLED=$(which zsh)
+USER=$(who | cut -d" " -f1)
 
 if [ ! -n "$INSTALLED" ]; then #not intalled
     sudo apt-get update && sudo apt-get install zsh -y

@@ -7,12 +7,13 @@ DISTRO_INFO=$(lsb_release -i) #Distributor ID: Ubuntu
 DISTRO_ID=${DISTRO_INFO#'Distributor ID:'*} #remove Distributor ID:
 DISTRO_ID=$(echo $DISTRO_ID | sed 's/^[ \t]*//') #remove leading spaces
 DISTRO_ID=${DISTRO_ID,,}                #to_lower
-USER=$(ls /home)
-INSTALL_DIR='/usr/local/programas'
+USER=$(who | cut -d" " -f1)
+HOME_DIR=$(pwd)
+INSTALL_DIR='/var/programas'
 ARCH=$(uname -m)
 
 #programs if true, then will be installed
-BASIC_PACKAGES=false
+BASIC_PACKAGES=true
 #Cloud/Browsers
 CHROME=false
 DROP_BOX=false
@@ -27,23 +28,24 @@ SPOTIFY=false
 NETBEANS_INSTALL=false
 NETBEANS_VERSION=8.0.2 #see more http://www.netbeans.info/downloads/dev.php
 PHP_STORM=false
-PHP_STORM_VERSION=9.0.2 #see more https://www.jetbrains.com/phpstorm/download/
+PHP_STORM_VERSION=9.0.3 #see more https://www.jetbrains.com/phpstorm/download/
 EVOLUS_PENCIL_INSTALL=false
 EVOLUS_PENCIL_VERSION=2.0.2
 MYSQL_WORKBENCH=false
-DATA_STUDIO=false
+DATA_STUDIO=true
 #others with script
 GIT=false
 VIM=false
 DOCKER=false
 ZSH=false
 JAVA=false
+JAVA_VERSION=8 #7,8,9
 CAIXA_MODULE=false
 SUBLIME_TEXT=false
 MOUNT_PARTITION=false
 DEVICE=desktop
 CREATE_LINKS=false
-THEME_FLATABULOUS=true
+THEME_FLATABULOUS=false
 ULTRA_FLAT_ICONS=false
 #################################################
 
@@ -271,17 +273,30 @@ function install_programs() {
     
     #git
     if [ $GIT == true ]; then
-        sudo ./install_and_configure_git.sh
+	cd $HOME_DIR
+        sudo ./install_and_configure_git.sh $USER
+        if [ $? -eq 0 ]; then
+            PROGRAMS['git']=true
+        else
+            PROGRAMS['git']=false;
+        fi
     fi
 
     #vim
     if [ $VIM == true ]; then
-        sudo ./install_vim.sh
+	cd $HOME_DIR
+        sudo ./install_vim.sh $USER
+	if [ $? -eq 0 ]; then
+            PROGRAMS['vim']=true
+        else
+            PROGRAMS['vim']=false;
+        fi
     fi
 
     #docker
     if [ $DOCKER == true ]; then
-        sudo ./install_docker.sh
+	cd $HOME_DIR
+        sudo ./install_docker.sh $USER
         if [ $? -eq 0 ]; then
             PROGRAMS['docker']=true
         else
@@ -291,13 +306,20 @@ function install_programs() {
 
     #zsh
     if [ $ZSH == true ]; then
+	cd $HOME_DIR
         sudo ./install_zsh_with_oh_my_sh.sh
+	if [ $? -eq 0 ]; then
+            PROGRAMS['zsh']=true
+        else
+            PROGRAMS['zsh']=false;
+        fi
     fi
 
 
     #java
     if [ $JAVA == true ]; then
-        sudo ./install_java.sh
+	cd $HOME_DIR
+        sudo ./install_java.sh $JAVA_VERSION
         if [ $? -eq 0 ]; then
             PROGRAMS['java']=true
         else
@@ -307,8 +329,8 @@ function install_programs() {
 
     #sublime-text
     if [ $SUBLIME_TEXT == true ]; then
+	cd $HOME_DIR
         sudo ./install_sublime_text3.sh
-
         if [ $? -eq 0 ]; then
             PROGRAMS['sublime-text']=true
         else
@@ -318,6 +340,7 @@ function install_programs() {
 
     #caixa module
     if [ $CAIXA_MODULE == true ]; then
+	cd $HOME_DIR
         sudo ./install_modulo_seg_caixa.sh
         if [ $? -eq 0 ]; then
             PROGRAMS['caixa-module']=true
@@ -326,19 +349,9 @@ function install_programs() {
         fi
     fi
 
-
-    #sublime-text
-    if [ $SUBLIME_TEXT == true ]; then
-        sudo ./install_sublime_text3.sh
-        if [ $? -eq 0 ]; then
-            PROGRAMS['sublime-text']=true
-        else
-            PROGRAMS['sublime-text']=false;
-        fi
-    fi
-
     #mount-partition
     if [ $MOUNT_PARTITION == true ]; then
+	cd $HOME_DIR
         sudo ./mount_partition.sh desktop 
         if [ $? -eq 0 ]; then
             PROGRAMS['mount-partition']=true

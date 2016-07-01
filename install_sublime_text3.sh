@@ -1,5 +1,5 @@
 #!/bin/bash
-HOME_DIR=/home/$(ls /home)
+HOME_DIR=/home/$(who | cut -d" " -f1)
 SUBLIME_DIR=$HOME_DIR/.config/sublime-text-3
 INSTALLED_PACKAGE_DIR=$SUBLIME_DIR/Installed\ Packages
 PACKAGE_DIR=$SUBLIME_DIR/Packages

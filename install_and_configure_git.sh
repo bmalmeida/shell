@@ -4,13 +4,17 @@
 #
 
 #variables
-USER=`ls /home/`
+USER=$(who | cut -d" " -f1)
+PASSED_USER=$1
+if [ -n "$PASSED_USER" ];then #user passed
+	USER=$PASSED_USER
+fi
 HOME_DIR="/home/$USER"
 GIT_USER='Frederico Martini'
 GIT_EMAIL='fredmalmeida@gmail.com'
 
 function verify_installation(){
-	INSTALLED=`which git`
+	INSTALLED=$(which git)
 	if [ -n "$INSTALLED" ]; then
 		echo 0; #true
 	else

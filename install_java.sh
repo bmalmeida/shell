@@ -5,7 +5,11 @@
 DISTRO_NAME=`lsb_release -c` #comando retonara Codename: nome_distribuicao
 DISTRO_NAME=${DISTRO_NAME#'Codename:'}	#remove o que tiver no segundo parametro
 SO='debian' #debian or ubuntu
-JAVA_VERSION=8
+JAVA_VERSION=7
+PASSED_VERSION=$1
+if [ -n "$PASSED_VERSION" ];then #version passed
+	JAVA_VERSION=$PASSED_VERSION
+fi
 
 #######################################################################
 echo "
