@@ -13,7 +13,7 @@ INSTALL_DIR='/var/programas'
 ARCH=$(uname -m)
 
 #programs if true, then will be installed
-BASIC_PACKAGES=true
+BASIC_PACKAGES=false
 #Cloud/Browsers
 CHROME=false
 DROP_BOX=false
@@ -32,7 +32,7 @@ PHP_STORM_VERSION=9.0.3 #see more https://www.jetbrains.com/phpstorm/download/
 EVOLUS_PENCIL_INSTALL=false
 EVOLUS_PENCIL_VERSION=2.0.2
 MYSQL_WORKBENCH=false
-DATA_STUDIO=true
+DATA_STUDIO=false
 #others with script
 GIT=false
 VIM=false
@@ -47,6 +47,8 @@ DEVICE=desktop
 CREATE_LINKS=false
 THEME_FLATABULOUS=false
 ULTRA_FLAT_ICONS=false
+SLACK=true
+SLACK_VERSION=2.3.2
 #################################################
 
 function verify_dir() {
@@ -414,6 +416,19 @@ function install_programs() {
             PROGRAMS['ultra-flat-icons']=true
         else
             PROGRAMS['ultra-flat-icons']=false;
+        fi
+    fi
+    
+    #slack
+    if [ $SLACK == true ];then
+        wget https://downloads.slack-edge.com/linux_releases/slack-desktop-$SLACK_VERSION-amd64.deb -O $INSTALL_DIR/slack.deb
+        cd $INSTALL_DIR
+        gdebi slack.deb --n 
+
+        if [ $? -eq 0 ]; then
+            PROGRAMS['slack']=true
+        else
+            PROGRAMS['slack']=false;
         fi
     fi
 }
