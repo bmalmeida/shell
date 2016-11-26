@@ -1,6 +1,5 @@
 #!/bin/bash
 #script to install and configure vim with plugins
-#see more on https://github.com/fredericomartini/vimrc
 
 USER=$(who | cut -d" " -f1)
 PASSED_USER=$1
