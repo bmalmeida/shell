@@ -14,6 +14,11 @@ function install() {
     if [ -e "./sublime-text3/Preferences.sublime-settings" ]; then
         cp -R ./sublime-text3/Preferences.sublime-settings $PACKAGE_DIR/User
     fi
+
+    if [ -e "./sublime-text3/Default.sublime-mousemap" ]; then
+        cp -R ./sublime-text3/Default.sublime-mousemap $PACKAGE_DIR/User
+    fi
+
     chmod 777 -R $PACKAGE_DIR/User
 }
 
