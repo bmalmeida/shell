@@ -9,7 +9,13 @@ PACKAGE_DIR=$SUBLIME_DIR/Packages
 
 function install() {
     wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb -O $HOME_DIR/sublime-text3.deb
-    sudo dpkg --install $HOME_DIR/sublime-text3.deb
+    dpkg --install $HOME_DIR/sublime-text3.deb
+
+    #User dir not exists
+    if [ ! -d "$PACKAGE_DIR/User" ]; then
+	mkdir $PACKAGE_DIR/User
+    fi
+
     #copy config
     if [ -e "./sublime-text3/Preferences.sublime-settings" ]; then
         cp -R ./sublime-text3/Preferences.sublime-settings $PACKAGE_DIR/User
@@ -32,7 +38,8 @@ function install_plugins() {
 
     #Git
     if [ !  -d "$PACKAGE_DIR/Git" ]; then
-        git clone git://github.com/kemayo/sublime-text-2-git.git "$PACKAGE_DIR/Git"
+	git clone https://github.com/kemayo/sublime-text-git.git "$PACKAGE_DIR/Git"
+        #git clone git://github.com/kemayo/sublime-text-2-git.git "$PACKAGE_DIR/Git"
     fi
 
     #SideBarEnhancements
@@ -96,12 +103,12 @@ function install_plugins() {
     
     #Soda
     if [ ! -d "$PACKAGE_DIR/Soda-theme" ]; then
-		git clone https://github.com/buymeasoda/soda-theme.git "$PACKAGE_DIR/Soda-theme"
+		git clone https://github.com/buymeasoda/soda-theme/ "$PACKAGE_DIR/Soda-theme"
     fi
 
     #Material
     if [ ! -d "$PACKAGE_DIR/Material-theme" ]; then
-		https://github.com/equinusocio/material-theme.git "$PACKAGE_DIR/Material-theme"
+		git clone https://github.com/equinusocio/material-theme.git "$PACKAGE_DIR/Material-theme"
     fi
 
     
