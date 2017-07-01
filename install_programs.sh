@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #declarete array programs
 declare -A PROGRAMS
 
@@ -15,20 +15,20 @@ ARCH=$(uname -m)
 #programs if true, then will be installed
 BASIC_PACKAGES=false
 #Cloud/Browsers
-CHROME=false
+CHROME=true
 DROP_BOX=false
 DROP_BOX_DATE='2015.10.28'
 MEGA=false
 MEGA_URL='https://mega.nz/linux/MEGAsync/xUbuntu_16.04/amd64/megasync_2.9.1_amd64.deb' #see more https://mega.nz/linux/MEGAsync/
 #Multimedia
 STREMIO=false
-STREMIO_VERSION=3.5.7  #see more http://dl.strem.io/Stremio3.4.5.linux.tar.gz
+STREMIO_VERSION=3.6.5  #see more http://dl.strem.io/Stremio3.4.5.linux.tar.gz
 SPOTIFY=false
 #IDE'S
 NETBEANS_INSTALL=false
 NETBEANS_VERSION=8.0.2 #see more http://www.netbeans.info/downloads/dev.php
 PHP_STORM=false
-PHP_STORM_VERSION=9.0.3 #see more https://www.jetbrains.com/phpstorm/download/
+PHP_STORM_VERSION=2017.1.4 #see more https://www.jetbrains.com/phpstorm/download/
 EVOLUS_PENCIL_INSTALL=false
 EVOLUS_PENCIL_VERSION=2.0.2
 MYSQL_WORKBENCH=false
@@ -47,8 +47,9 @@ DEVICE=desktop
 CREATE_LINKS=false
 THEME_FLATABULOUS=false
 ULTRA_FLAT_ICONS=false
-SLACK=true
-SLACK_VERSION=2.3.2
+SLACK=false
+SLACK_VERSION=2.6.3
+
 #################################################
 
 function verify_dir() {
@@ -61,7 +62,7 @@ function verify_dir() {
 function install_programs() {
     #basic
     if [ $BASIC_PACKAGES == true ]; then
-        sudo apt-get install wget curl vlc arj p7zip p7zip-full alacarte htop meld gpicview gnome-tweak-tool synergy gdebi unity-tweak-tool -y
+        sudo apt-get install wget curl vlc arj p7zip p7zip-full alacarte htop meld gpicview gnome-tweak-tool synergy gdebi unity-tweak-tool ambiance-blackout-flat-colors papirus-icon-theme -y
     fi
 
     #google chrome
@@ -74,29 +75,29 @@ function install_programs() {
 
         #baixar chrome ultima versao
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_$ARCH2.deb -O $INSTALL_DIR/google-chrome.deb
-        
+
         #remove versao anterior
         dpkg -r google-chrome-stable > /dev/null 2>&1
 
-        cd $INSTALL_DIR 
-        gdebi google-chrome.deb --n 
+        cd $INSTALL_DIR
+        gdebi google-chrome.deb --n
         if [ $? -eq 0 ]; then
             PROGRAMS['chrome']=true
         else
             PROGRAMS['chrome']=false;
         fi
-        
+
         #del files
         rm -rf $INSTALL_DIR/google-chrome* > /dev/null 2>&1
     fi
-       
+
     #instalacao drop-box
     if [ $DROP_BOX == true ]; then
         if [ $ARCH != 'x86_64' ]; then #sistema 32bit
             ARCH2=i386
         else
             ARCH2=amd64
-        fi  
+        fi
         echo /$DISTRO_ID
         #download
         wget https://www.dropbox.com/download?dl=packages/$DISTRO_ID/dropbox_$DROP_BOX_DATE"_"$ARCH2.deb -O $INSTALL_DIR/dropbox.deb
@@ -122,9 +123,9 @@ function install_programs() {
 
         #download
         wget $MEGA_URL -O $INSTALL_DIR/mega.deb
-        
+
         cd $INSTALL_DIR
-        
+
         gdebi mega.deb --n
         if [ $? -eq 0 ]; then
             PROGRAMS['mega']=true
@@ -171,22 +172,22 @@ function install_programs() {
             ARCH2=i386
         else
             ARCH2=amd64
-        fi  
+        fi
 
-        #download 
+        #download
         #wget http://ftp.us.debian.org/debian/pool/main/libg/libgcrypt11/libgcrypt11_1.5.0-5+deb7u3_$ARCH2.deb -O $INSTALL_DIR/spotify.deb
         #dpkg -i libcrypt11_1.5.0.deb #-y é preciso?????
 
-        #add key    
+        #add key
         sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
 
-        #add repository 
+        #add repository
         sudo echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list
 
         #update system
         apt-get update  -y
 
-        apt-get install spotify-client -y 
+        apt-get install spotify-client -y
         if [ $? -eq 0 ]; then
             PROGRAMS['spotify']=true
         else
@@ -202,7 +203,7 @@ function install_programs() {
 
         sudo rm -rf $INSTALL_DIR/phpStorm
         mkdir $INSTALL_DIR/phpStorm
-        chmod 777 -R $INSTALL_DIR/phpStorm         
+        chmod 777 -R $INSTALL_DIR/phpStorm
 
         cd $INSTALL_DIR
         tar xvzf phpstorm.tar.gz -C $INSTALL_DIR/phpStorm/
@@ -223,24 +224,24 @@ function install_programs() {
 #             ARCH2=i386
 #         else
 #             ARCH2=amd64
-#         fi  
-# 
+#         fi
+#
 #         #verifica nome distro
 #         if [[ $DISTRO_ID == ubuntu || $DISTRO_ID == debian ]]; then
 #             DISTRO_ID2=1ubu1504
 #         else
 #             DISTRO_ID2=other
 #         fi
-# 
+#
 #         if [ $DISTRO_ID2 != other ]; then
-# 
+#
 #             #wget http://ftp.kaist.ac.kr/mysql/Downloads/MySQLGUITools/mysql-workbench-community-$MYSQL_WORKBENCH_VERSION-$DISTRO_ID2-$ARCH2.deb -O $INSTALL_DIR/mysql-workbench.deb
-# 
+#
 #             #dependencia necessaria libjpeg8
 #             #wget http://ftp.us.debian.org/debian/pool/main/libj/libjpeg8/libjpeg8_8d1-2_$ARCH2.deb -O $INSTALL_DIR/libjpeg8.deb
-# 
+#
 #             sudo apt-get --purge remove mysql* -y > /dev/null 2>&1
-# 
+#
 #             #instalar dependencia
 #             cd $INSTALL_DIR
 #             sudo gdebi libjpeg8.deb  --n  #> /dev/null 2>&1 #auto accept
@@ -249,7 +250,7 @@ function install_programs() {
 #             else
 #                 PROGRAMS['mysql-libjpeg8']=false;
 #             fi
-# 
+#
 #             #dependencia
 #             sudo apt-get install -y libatkmm-1.6*
 #             sudo gdebi mysql-workbench.deb --n # > /dev/null 2>&1 #auto accept
@@ -258,7 +259,7 @@ function install_programs() {
 #             else
 #                 PROGRAMS['mysql-workbench']=false;
 #             fi
-# 
+#
 #             #rm -rf mysql-workbench*
 #             #rm -rf libjpeg8*
 #         else
@@ -272,7 +273,7 @@ function install_programs() {
                 PROGRAMS['phpstorm']=false;
             fi
     fi
-    
+
     #git
     if [ $GIT == true ]; then
 	cd $HOME_DIR
@@ -354,7 +355,7 @@ function install_programs() {
     #mount-partition
     if [ $MOUNT_PARTITION == true ]; then
 	cd $HOME_DIR
-        sudo ./mount_partition.sh desktop 
+        sudo ./mount_partition.sh desktop
         if [ $? -eq 0 ]; then
             PROGRAMS['mount-partition']=true
         else
@@ -371,7 +372,7 @@ function install_programs() {
             ln -s /media/DADOS/Downloads /home/$USER/Downloads
             ln -s /media/DADOS/Filmes /home/$USER/Videos
             ln -s /media/DADOS/git /home/$USER/git
-        fi 
+        fi
         if [ $? -eq 0 ]; then
             PROGRAMS['create-links']=true
         else
@@ -382,7 +383,7 @@ function install_programs() {
     #datastudio
     if [ $DATA_STUDIO == true ]; then
         if [ -f "/media/DADOS/Programas/datastudio6.5.tar.gz" ]; then #file exist
-            tar -xzvf /media/DADOS/Programas/datastudio6.5.tar.gz -C $INSTALL_DIR/ 
+            tar -xzvf /media/DADOS/Programas/datastudio6.5.tar.gz -C $INSTALL_DIR/
         fi
         if [ $? -eq 0 ]; then
             PROGRAMS['data-studio']=true
@@ -407,7 +408,7 @@ function install_programs() {
         fi
     fi
 
-    #ultra-flat icons 
+    #ultra-flat icons
     if [ $ULTRA_FLAT_ICONS == true ];then
         sudo add-apt-repository ppa:noobslab/icons -y
         sudo apt-get update
@@ -418,12 +419,12 @@ function install_programs() {
             PROGRAMS['ultra-flat-icons']=false;
         fi
     fi
-    
+
     #slack
     if [ $SLACK == true ];then
         wget https://downloads.slack-edge.com/linux_releases/slack-desktop-$SLACK_VERSION-amd64.deb -O $INSTALL_DIR/slack.deb
         cd $INSTALL_DIR
-        gdebi slack.deb --n 
+        gdebi slack.deb --n
 
         if [ $? -eq 0 ]; then
             PROGRAMS['slack']=true
