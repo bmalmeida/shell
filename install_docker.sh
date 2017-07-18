@@ -12,8 +12,8 @@ if [ -n "$USER_PARAM" ]; then #passado parametro usuario
 fi
 
 #Must installed curl
-function install_dependencies(){
-INSTALLED=`which curl`
+function install_dependencies () {
+INSTALLED=$(which curl)
 
 if [ ! -n "$INSTALLED" ]; then
     sudo apt-get update && sudo apt-get install curl
@@ -22,7 +22,7 @@ fi
 
 function install_docker () {
 #verify not installed
-INSTALLED=`which docker`
+INSTALLED=$(which docker)
 if [ ! -n "$INSTALLED" ]; then #nao instalado
     #get latest Docker packege
     curl -fsSL https://get.docker.com/ | sh
@@ -65,6 +65,6 @@ install_dependencies
 install_docker
 add_user_docker
 add_insecure_registry
-}   
+}
 
 main
