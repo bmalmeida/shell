@@ -46,6 +46,8 @@ MOUNT_PARTITION=false
 DEVICE=desktop
 CREATE_LINKS=false
 THEME_FLATABULOUS=false
+THEME_BREEZY=true
+PAPIROS_ICONS=true
 ULTRA_FLAT_ICONS=false
 SLACK=false
 SLACK_VERSION=2.6.3
@@ -408,6 +410,22 @@ function install_programs() {
         fi
     fi
 
+    #theme breezy
+    if [ $THEME_BREEZY == true ];then
+        wget https://github.com/nivekxyz/breezy-gtk/archive/master.zip -O $INSTALL_DIR/breezy.zip
+        cd $INSTALL_DIR
+        if [ ! -d "/home/$USER/.themes" ]; then
+            mkdir /home/$USER/.themes
+        fi
+        unzip $INSTALL_DIR/breezy.zip -d /home/$USER/.themes/
+
+        if [ $? -eq 0 ]; then
+            PROGRAMS['breezy-theme']=true
+        else
+            PROGRAMS['breezy-theme']=false;
+        fi
+    fi
+
     #ultra-flat icons
     if [ $ULTRA_FLAT_ICONS == true ];then
         sudo add-apt-repository ppa:noobslab/icons -y
@@ -417,6 +435,17 @@ function install_programs() {
             PROGRAMS['ultra-flat-icons']=true
         else
             PROGRAMS['ultra-flat-icons']=false;
+        fi
+    fi
+
+    #papiro icons
+    if [ $PAPIRO_ICONS == true ];then
+	sudo su
+	wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install-papirus-root.sh | sh
+        if [ $? -eq 0 ]; then
+            PROGRAMS['papiro-icons']=true
+        else
+            PROGRAMS['papiro-icons']=false;
         fi
     fi
 
