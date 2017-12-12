@@ -9,7 +9,7 @@ PACKAGE_DIR=$SUBLIME_DIR/Packages
 
 function install() {
     wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb -O $HOME_DIR/sublime-text3.deb
-    dpkg --install $HOME_DIR/sublime-text3.deb
+    sudo dpkg --install $HOME_DIR/sublime-text3.deb
 
     #User dir not exists
     if [ ! -d "$PACKAGE_DIR/User" ]; then
@@ -25,7 +25,7 @@ function install() {
         cp -R ./sublime-text3/Default.sublime-mousemap $PACKAGE_DIR/User
     fi
 
-    chmod 777 -R $PACKAGE_DIR/User
+    sudo chmod 777 -R $PACKAGE_DIR/User
 }
 
 function install_plugins() {
