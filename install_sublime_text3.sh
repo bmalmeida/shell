@@ -8,8 +8,18 @@ PACKAGE_DIR=$SUBLIME_DIR/Packages
 #Bootstrap 3 Snippets,
 
 function install() {
-    wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb -O $HOME_DIR/sublime-text3.deb
+    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+    
+    sudo apt-get install apt-transport-https
+
+    
+    #stable
+    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+    
     sudo dpkg --install $HOME_DIR/sublime-text3.deb
+
+    sudo apt-get update
+    sudo apt-get install sublime-text
 
     #User dir not exists
     if [ ! -d "$PACKAGE_DIR/User" ]; then
@@ -25,7 +35,9 @@ function install() {
         cp -R ./sublime-text3/Default.sublime-mousemap $PACKAGE_DIR/User
     fi
 
-    sudo chmod 777 -R $PACKAGE_DIR/User
+    chmod 777 -R ${PACKAGE_DIR}/User
+    sudo chown ${USER}:${USER} -R $PACKAGE_DIR/User
+    sudo chown ${USER}:${USER} -R ${SUBLIME_DIR}
 }
 
 function install_plugins() {
