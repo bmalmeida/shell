@@ -25,7 +25,7 @@ function install_docker () {
 INSTALLED=$(which docker)
 if [ ! -n "$INSTALLED" ]; then #nao instalado
     #get latest Docker packege
-    curl -fsSL https://get.docker.com/ | sh
+    curl -fsSL https://get.docker.com/ | bash
 
     #Note: If your company is behind a filtering proxy, you may find that the apt-key command fails for the Docker repo during installation. To work around this, add the key directly using the following:
     curl -fsSL https://get.docker.com/gpg | sudo apt-key add -
